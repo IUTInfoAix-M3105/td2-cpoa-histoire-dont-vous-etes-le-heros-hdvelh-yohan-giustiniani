@@ -15,11 +15,14 @@ public class NodeMultiple {
 	public static final int ERROR_STATUS_INDEX_OUT_OF_RANGE = -1;
 	public static final String ERROR_MSG_INDEX_OUT_OF_RANGE = "Index out of range";
 	public static int NODE_MAX_ARITY = 10;
+	private Object data;
+	private NodeMultiple[] daughters;
 
 	/* Overridden methods */
 	@Override
 	public String toString() {
 		/* TO BE COMPLETED */
+		return data.toString();
 	}
 
 	/* Getters/Setters */
@@ -51,6 +54,11 @@ public class NodeMultiple {
 	 */
 	public void setDaughter(NodeMultiple daughter, int i) {
 		/* TO BE COMPLETED */
+		if (i<0 || i>=NODE_MAX_ARITY) {
+			ErrorNaiveHandler.abort(ERROR_MSG_INDEX_OUT_OF_RANGE + "0" + getClass() + ".set.Daughter()");
+		}
+		daughters[i]=daughter;
+		
 	}
 
 	/**
@@ -58,6 +66,7 @@ public class NodeMultiple {
 	 */
 	public NodeMultiple[] getDaughters() {
 		/* TO BE COMPLETED */
+		return daughters;
 	}
 
 	/**
@@ -77,6 +86,16 @@ public class NodeMultiple {
 	 */
 	public void addDaughter(NodeMultiple daughter) {
 		/* TO BE COMPLETED */
+		if (daughter == null) {
+			return;
+		}
+		int i = 0;
+		while(daughters[i] != null && i < NODE_MAX_ARITY) {
+			i++;
+		}
+		if (i < NODE_MAX_ARITY) {
+			daughters[i] = daughter;
+		}
 	}
 
 	/**
@@ -99,6 +118,14 @@ public class NodeMultiple {
 	 */
 	public boolean hasDaughters() {
 		/* TO BE COMPLETED */
+		if (daughters == null) {
+			return false;
+		}
+		int i = 0;
+		while (i < daughters.length && daughters[i] == null) {
+			++i;
+		}
+		return i < daughters.length ? true : false;
 	}
 
 	/* Constructors */
@@ -107,7 +134,11 @@ public class NodeMultiple {
 	 */
 	public NodeMultiple() {
 		/* TO BE COMPLETED */
+//		super();
+		data =new Object(); //inutile...
+		daughters =new NodeMultiple[NODE_MAX_ARITY];
 	}
+		/* TO BE COMPLETED */
 
 	/**
 	 * Constructor. Sets the content data to {@code data} and creates an empty set
@@ -117,6 +148,10 @@ public class NodeMultiple {
 	 */
 	public NodeMultiple(Object data) {
 		/* TO BE COMPLETED */
+		this();
+		this.data=data;
+	}
+	
 }
 
 // eof
